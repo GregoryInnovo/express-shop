@@ -9,6 +9,17 @@ app.get('/', (req, res) => {
   res.send('My first server in express');
 });
 
+app.get('/new-route', (req, res) => {
+  res.send('Im a new end point');
+});
+
+app.get('/products', (req, res) => {
+  res.json({
+    name: 'Product 1',
+    price: 1000
+  });
+});
+
 // the ap need to listen
 app.listen(port, () => {
   console.log(`Listening in the port ${port}`);

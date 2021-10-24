@@ -9,10 +9,6 @@ app.get('/', (req, res) => {
   res.send('My first server in express');
 });
 
-app.get('/new-route', (req, res) => {
-  res.send('Im a new end point');
-});
-
 app.get('/products', (req, res) => {
   // Send a list of product
   res.json([
@@ -27,10 +23,6 @@ app.get('/products', (req, res) => {
   ]);
 });
 
-app.get('/profile', (req, res) => {
-  res.send('This is the profile');
-});
-
 // return the detail of a product with a id
 app.get('/products/:id', (req, res) => {
   // Get the id from the req
@@ -42,12 +34,47 @@ app.get('/products/:id', (req, res) => {
   });
 });
 
+/*
+  Categories section
+*/
 // another depth
 app.get('/categories/:categoryId/products/:productId', (req, res) => {
   const { categoryId, productId } = req.params;
   res.json({
     categoryId,
     productId,
+  });
+});
+
+/*
+  Orders section
+*/
+
+app.get('/orders', (req, res) => {
+  res.json([
+    {
+      name: 'Order 1',
+      amount: 4,
+      totalPrice: 1000,
+    }
+  ]);
+});
+
+/*
+  Users section
+*/
+
+app.get('/users', (req, res) => {
+  res.send('This is the user section');
+});
+
+app.get('/users/:userId', (req, res) => {
+  const { userId } = req.params;
+
+  res.json({
+    userId,
+    name: 'Default',
+    email: 'default@example.com',
   });
 });
 

@@ -14,15 +14,42 @@ app.get('/new-route', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-  res.json({
-    name: 'Product 1',
-    price: 1000
-  });
+  // Send a list of product
+  res.json([
+    {
+      name: 'Product 1',
+      price: 1000,
+    },
+    {
+      name: 'Product 2',
+      price: 2000,
+    }
+  ]);
 });
 
 app.get('/profile', (req, res) => {
-  res.send('This is the profile')
-})
+  res.send('This is the profile');
+});
+
+// return the detail of a product with a id
+app.get('/products/:id', (req, res) => {
+  // Get the id from the req
+  const { id } = req.params;
+  res.json({
+    id,
+    name: 'Product 2',
+    price: 2000,
+  });
+});
+
+// another depth
+app.get('/categories/:categoryId/products/:productId', (req, res) => {
+  const { categoryId, productId } = req.params;
+  res.json({
+    categoryId,
+    productId,
+  });
+});
 
 // the app need to listen
 app.listen(port, () => {

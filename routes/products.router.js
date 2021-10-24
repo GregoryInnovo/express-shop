@@ -29,18 +29,24 @@ router.get('/filter', (req, res) => {
 router.get('/:id', (req, res) => {
   // Get the id from the req
   const { id } = req.params;
-  res.json({
-    id,
-    name: 'Product 2',
-    price: 2000,
-  });
+  if (id == '999') {
+    res.status(404).json({
+      message: 'NOT FOUND'
+    });
+  } else {
+    res.status(200).json({
+      id,
+      name: 'Product 2',
+      price: 2000,
+    });
+  }
 });
 
 // create post method
 router.post('/', (req, res) => {
   const body = req.body;
 
-  res.json({
+  res.status(201).json({
     message: 'created',
     data: body
   });

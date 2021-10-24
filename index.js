@@ -20,7 +20,11 @@ app.get('/products', (req, res) => {
   });
 });
 
-// the ap need to listen
+app.get('/profile', (req, res) => {
+  res.send('This is the profile')
+})
+
+// the app need to listen
 app.listen(port, () => {
   console.log(`Listening in the port ${port}`);
 });

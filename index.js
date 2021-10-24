@@ -1,4 +1,5 @@
 const express = require('express');
+const faker = require('faker');
 // create app
 const app = express();
 // the port to run
@@ -10,18 +11,25 @@ app.get('/', (req, res) => {
 });
 
 app.get('/products', (req, res) => {
+  const products = [];
+  const { size } = req.query;
+  const limit = size || 10;
+  for (let index = 0; index < limit; index++) {
+    products.push({
+      name: faker.commerce.productName(),
+      price: parseInt(faker.commerce.price(), 10),
+      image: faker.image.imageUrl(),
+    })
+
+  }
   // Send a list of product
-  res.json([
-    {
-      name: 'Product 1',
-      price: 1000,
-    },
-    {
-      name: 'Product 2',
-      price: 2000,
-    }
-  ]);
+  res.json(products);
 });
+
+// all that is specific NEED TO BE BEFORE a dynamic link
+app.get('/products/filter', (req, res) => {
+  res.send('Soy un filter');
+})
 
 // return the detail of a product with a id
 app.get('/products/:id', (req, res) => {
@@ -64,8 +72,18 @@ app.get('/orders', (req, res) => {
   Users section
 */
 
+// params with a query
 app.get('/users', (req, res) => {
-  res.send('This is the user section');
+  const { limit, offset} = req.query;
+  if(limit && offset) {
+    res.json({
+      limit,
+      offset,
+    });
+  } else {
+    res.send('No params')
+  }
+
 });
 
 app.get('/users/:userId', (req, res) => {

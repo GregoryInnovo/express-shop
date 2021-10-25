@@ -7,7 +7,6 @@ class ProductsService {
   }
 
   generate() {
-
     const limit = 100;
     for (let index = 0; index < limit; index++) {
       this.products.push({
@@ -19,19 +18,45 @@ class ProductsService {
     }
   }
 
-  create() {}
+  create(data) {
+    // ... split operator
+    const newProduct = {
+      id: faker.datatype.uuid(),
+      ...data,
+    };
+    this.products.push(newProduct);
+    return newProduct;
+  }
 
   find() {
     return this.products;
   }
 
   findOne(id) {
-    return this.products.find(item => item.id === id);
+    return this.products.find((item) => item.id === id);
   }
 
-  update() {}
+  update(id, changes) {
+    const index = this.products.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new Error('Product not found');
+    }
+    const product = this.products[index];
+    this.products[index] = {
+      ...product,
+      ...changes,
+    };
+    return this.products[index];
+  }
 
-  delete() {}
+  delete(id) {
+    const index = this.products.findIndex((item) => item.id === id);
+    if (index === -1) {
+      throw new Error('Product not found');
+    }
+    this.products.splice(index, 1);
+    return { id };
+  }
 }
 
 module.exports = ProductsService;

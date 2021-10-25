@@ -18,11 +18,16 @@ router.get('/filter', (req, res) => {
 });
 
 // return the detail of a product with a id
-router.get('/:id', async (req, res) => {
-  // Get the id from the req
-  const { id } = req.params;
-  const product = await service.findOne(id);
-  res.json(product);
+router.get('/:id', async (req, res, next) => {
+  try {
+    // Get the id from the req
+    const { id } = req.params;
+    const product = await service.findOne(id);
+    res.json(product);
+  } catch (error) {
+    // execute a middleware error
+    next(error);
+  }
 });
 
 // create post method

@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const routerApi = require('./routes');
 
 const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
@@ -20,6 +21,19 @@ routerApi(app);
 app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
+
+const whiteList = ['http://localhost:8080', 'https://my.app.co'];
+const options = {
+  origin: (origin, callback) => {
+    if(whiteList.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No access'));
+    }
+  }
+}
+// any domain can access cors()
+app.use(cors(options));
 
 // the app need to listen
 app.listen(port, () => {

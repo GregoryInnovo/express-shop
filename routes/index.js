@@ -1,4 +1,4 @@
-// config the routes
+// config the routes, access of the endpoints
 const express = require('express');
 
 

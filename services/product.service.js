@@ -1,5 +1,6 @@
 const faker = require('faker');
 const boom = require('@hapi/boom');
+const data = require('../libs/data');
 
 class ProductsService {
   constructor() {
@@ -8,14 +9,15 @@ class ProductsService {
   }
 
   generate() {
-    const limit = 100;
-    for (let index = 0; index < limit; index++) {
+    const limit = 14;
+    for (let i = 1; i <= limit; i++) {
+      console.log("tamaño es", data.module.platos[0][`${i}`].nombre);
       this.products.push({
-        id: faker.datatype.uuid(),
-        name: faker.commerce.productName(),
-        price: parseInt(faker.commerce.price(), 10),
-        image: faker.image.imageUrl(),
-        isBlock: faker.datatype.boolean(),
+        id: data.module.platos[0][`${i}`].id,
+        nombre: data.module.platos[0][`${i}`].nombre,
+        precio: data.module.platos[0][`${i}`].precio,
+        imagen: data.module.platos[0][`${i}`].imagen,
+        descripcion: data.module.platos[0][`${i}`].descripcion,
       });
     }
   }

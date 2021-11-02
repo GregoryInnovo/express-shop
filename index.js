@@ -10,7 +10,7 @@ const port = process.env.PORT || 3000;
 
 // middleware
 app.use(express.json());
-
+app.use(cors());
 // define a route, for the dir and cb for the response
 app.get('/', (req, res) => {
   res.send('My first server in express');
@@ -34,7 +34,7 @@ const options = {
 }*/
 // any domain can access cors()
 //app.use(cors(options));
-app.use(cors());
+
 
 // the app need to listen
 app.listen(port, () => {

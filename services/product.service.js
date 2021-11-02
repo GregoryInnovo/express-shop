@@ -11,7 +11,7 @@ class ProductsService {
   generate() {
     const limit = 14;
     for (let i = 1; i <= limit; i++) {
-      console.log("tamaño es", data.module.platos[0][`${i}`].nombre);
+      // console.log("tamaño es", data.module.platos[0][`${i}`].nombre);
       this.products.push({
         id: data.module.platos[0][`${i}`].id,
         nombre: data.module.platos[0][`${i}`].nombre,

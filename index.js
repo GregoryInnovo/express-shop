@@ -22,7 +22,7 @@ app.use(logErrors);
 app.use(boomErrorHandler);
 app.use(errorHandler);
 
-const whiteList = ['http://localhost:8080', 'https://my.app.co'];
+/*const whiteList = ['http://localhost:8080', 'https://my.app.co'];
 const options = {
   origin: (origin, callback) => {
     if(whiteList.includes(origin) || !origin) {
@@ -31,9 +31,10 @@ const options = {
       callback(new Error('No access'));
     }
   }
-}
+}*/
 // any domain can access cors()
-app.use(cors(options));
+//app.use(cors(options));
+app.use(cors());
 
 // the app need to listen
 app.listen(port, () => {

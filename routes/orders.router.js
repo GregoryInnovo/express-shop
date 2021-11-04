@@ -25,6 +25,7 @@ router.post('/', (req, res) => {
 });
 
 // patch method
+
 router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;

@@ -21,7 +21,7 @@ class OrdersService {
   }
 
   update(id, changes) {
-    const index = this.orders.findIndex((item) => item.id === id);
+    const index = this.orders.findIndex((item) => item.id == id);
     if (index === -1) {
       throw new Error('Product not found');
     }

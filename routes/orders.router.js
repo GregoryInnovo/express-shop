@@ -25,12 +25,12 @@ router.post('/', (req, res) => {
 });
 
 // patch method
-/* router.patch('/:id', (req, res) => {
+router.patch('/:id', (req, res) => {
   const { id } = req.params;
   const body = req.body;
-  const order = order.update(id, body);
-  res.json(order);
-}); */
+  const patchOrder = order.update(id, body);
+  res.json(patchOrder);
+});
 
 // delete method
 router.delete('/:id', (req, res) => {

@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
       name: 'Order 1',
       amount: 4,
       totalPrice: 1000,
-    }
+    },
   ]);
 });
 

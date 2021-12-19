@@ -11,7 +11,7 @@ const sequelize = new Sequelize(URI, {
   logging: true,
 });
 
-setUpModels(sequelize);
+setUpModels(sequelize); // not recommend in production
 
 sequelize.sync();
 

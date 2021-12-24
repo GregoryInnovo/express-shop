@@ -6,17 +6,25 @@ const {
   createProductSchema,
   updateProductSchema,
   getProductSchema,
+  queryProductSchema,
 } = require('./../schemas/product.schema');
 
 // call the route init
 const router = express.Router();
 const service = new ProductsService();
 
-router.get('/', async (req, res) => {
-  const products = await service.find();
-  // Send a list of product
-  res.json(products);
-});
+router.get(
+  '/',
+  validatorHandler(queryProductSchema, 'query'),
+  async (req, res, next) => {
+    try {
+      const products = await service.find(req.query);
+      res.json(products);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 // all that is specific NEED TO BE BEFORE a dynamic link
 router.get('/filter', (req, res) => {

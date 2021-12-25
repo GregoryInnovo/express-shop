@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 
+const { checkApiKey } = require('./middlewares/auth.handler');
+
 const {
   logErrors,
   ormErrorHandler,
@@ -19,6 +21,10 @@ app.use(express.json());
 // define a route, for the dir and cb for the response
 app.get('/', (req, res) => {
   res.send('My first server in express');
+});
+
+app.get('/new-route', checkApiKey, (req, res) => {
+  res.send('You can see this if you have the correct token');
 });
 
 routerApi(app);

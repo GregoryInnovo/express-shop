@@ -1,6 +1,9 @@
 const faker = require('faker');
+const { Op } = require('sequelize');
 const boom = require('@hapi/boom');
 const data = require('../libs/data');
+
+const { models } = require('./../libs/sequelize');
 
 class ProductsService {
   constructor() {
@@ -24,14 +27,11 @@ class ProductsService {
 
   async create(data) {
     // ... split operator
-    const newProduct = {
-      id: faker.datatype.uuid(),
-      ...data,
-    };
-    this.products.push(newProduct);
+    const newProduct = await models.Product.create(data);
     return newProduct;
   }
 
+<<<<<<< HEAD
   async find() {
     // return new Promise((resolve, reject) => {
     //   setTimeout(() =>{
@@ -39,11 +39,38 @@ class ProductsService {
     //   },5000)
     // })
     return this.products;
+=======
+  async find(query) {
+    const options = {
+      include: ['category'],
+      where: {},
+    };
+    const { limit, price, offset, price_min, price_max } = query;
+    // verify if limit and offset exist
+    if (limit && offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+
+    if (price) {
+      options.where.price = price;
+    }
+
+    if (price_min && price_max) {
+      options.where.price = {
+        [Op.gte]: price_min,
+        [Op.lte]: price_max,
+      };
+    }
+
+    const products = await models.Product.findAll(options);
+    return products;
+>>>>>>> backend-postgres
   }
 
   async findOne(id) {
     const product = this.products.find((item) => item.id === id);
-    if(!product) {
+    if (!product) {
       throw boom.notFound('Product not found');
     }
     if (product.isBlock) {

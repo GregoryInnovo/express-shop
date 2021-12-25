@@ -2,15 +2,20 @@ const express = require('express');
 const cors = require('cors');
 const routerApi = require('./routes');
 
-// const { logErrors, errorHandler, boomErrorHandler } = require('./middlewares/error.handler');
+const {
+  logErrors,
+  ormErrorHandler,
+  errorHandler,
+  boomErrorHandler,
+} = require('./middlewares/error.handler');
 // create app
 const app = express();
 // the port to run
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // middleware
 app.use(express.json());
-app.use(cors());
+
 // define a route, for the dir and cb for the response
 app.get('/', (req, res) => {
   res.send('My first server in express');
@@ -18,23 +23,23 @@ app.get('/', (req, res) => {
 
 routerApi(app);
 
-// app.use(logErrors);
-// app.use(boomErrorHandler);
-// app.use(errorHandler);
+app.use(logErrors);
+app.use(ormErrorHandler);
+app.use(boomErrorHandler);
+app.use(errorHandler);
 
-/*const whiteList = ['http://localhost:8080', 'https://my.app.co'];
+const whiteList = ['http://localhost:8080', 'https://my.app.co'];
 const options = {
   origin: (origin, callback) => {
-    if(whiteList.includes(origin) || !origin) {
+    if (whiteList.includes(origin) || !origin) {
       callback(null, true);
     } else {
       callback(new Error('No access'));
     }
-  }
-}*/
+  },
+};
 // any domain can access cors()
-//app.use(cors(options));
-
+app.use(cors(options));
 
 // the app need to listen
 app.listen(port, () => {

@@ -31,15 +31,6 @@ class ProductsService {
     return newProduct;
   }
 
-<<<<<<< HEAD
-  async find() {
-    // return new Promise((resolve, reject) => {
-    //   setTimeout(() =>{
-    //     resolve(this.products);
-    //   },5000)
-    // })
-    return this.products;
-=======
   async find(query) {
     const options = {
       include: ['category'],
@@ -65,7 +56,6 @@ class ProductsService {
 
     const products = await models.Product.findAll(options);
     return products;
->>>>>>> backend-postgres
   }
 
   async findOne(id) {

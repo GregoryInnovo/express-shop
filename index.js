@@ -47,6 +47,8 @@ const options = {
 // any domain can access cors()
 app.use(cors(options));
 
+require('./utils/auth');
+
 // the app need to listen
 app.listen(port, () => {
   console.log(`Listening in the port ${port}`);

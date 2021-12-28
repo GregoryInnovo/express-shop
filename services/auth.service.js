@@ -26,10 +26,7 @@ class AuthService {
       role: user.role,
     };
     const token = jwt.sign(payload, config.jwtSecret);
-    res.json({
-      user,
-      token,
-    });
+    return { user, token };
   }
 
   async sendRecovery(email) {
@@ -40,7 +37,7 @@ class AuthService {
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
     const link = `https://my-front-end.com/recovery?token=${token}`;
-    await service.update(user.id, { recoveryToken: token });
+    const response = await service.update(user.id, { recoveryPassword: token });
 
     const mail = {
       from: config.userEmail, // sender address
@@ -65,6 +62,23 @@ class AuthService {
 
     await transporter.sendMail(InfoMail);
     return { message: 'mail sent' };
+  }
+
+  async changePassword(token, newPassword) {
+    try {
+      const payload = jwt.verify(token, config.jwtSecret);
+      const user = await service.findOne(payload.sub);
+
+      if (user.recoveryPassword !== token) {
+        throw boom.unauthorized();
+      }
+
+      const hash = await bcrypt.hash(newPassword, 10);
+      await service.update(user.id, { recoveryPassword: null, password: hash });
+      return { message: 'password changed' };
+    } catch (e) {
+      throw boom.unauthorized();
+    }
   }
 }
 

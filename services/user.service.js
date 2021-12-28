@@ -34,7 +34,7 @@ class UserService {
   }
 
   async update(id, changes) {
-    const user = await models.User.findByPk(id);
+    const user = await this.findOne(id);
     const rta = await user.update(changes);
     return rta;
   }
